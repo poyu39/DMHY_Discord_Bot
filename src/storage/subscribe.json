@@ -1,0 +1,7 @@
+{
+    "0": {
+        "subscribes": [
+            "https://share.dmhy.org/topics/rss/rss.xml?keyword=example&order=date-desc"
+        ]
+    }
+}

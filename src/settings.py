@@ -31,6 +31,8 @@ class Config:
         # reply embed
         self.REPLIER = self.config['replier']
 
+        # anime
+        self.SUBSCRIBE_FILE_PATH = f'{WORKDIR}/storage/subscribe.json'
 
 class BotLogger:
     def __init__(self):
