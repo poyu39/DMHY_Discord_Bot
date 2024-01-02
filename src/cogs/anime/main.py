@@ -1,7 +1,7 @@
 import feedparser
 from discord.ext import commands
 from discord import app_commands, Interaction
-
+from discord.app_commands import Choice
 from settings import Config, logger, replier
 
 CONFIG = Config()
@@ -17,14 +17,20 @@ class Anime(commands.Cog):
         logger.info('>>已載入 Dmhy<<')
 
     @app_commands.command(name='動畫資源搜尋', description='搜尋動畫資源')
-    @app_commands.rename(keyword='關鍵字')
-    async def search(self, interaction: Interaction, keyword: str):
+    @app_commands.rename(keyword='關鍵字', team='字幕組')
+    @app_commands.choices(
+        team=[
+            Choice(name='全部', value=0),
+            Choice(name='喵萌奶茶屋', value=669),
+        ]
+    )
+    async def search(self, interaction: Interaction, keyword: str, team: int):
         await interaction.response.defer()
         # 將空白替換成加號
         keyword = keyword.replace(' ', '+')
         if keyword:
             reply_embed = replier.success(value=f'搜尋 {keyword} 的前10筆結果')
-            search_result = self.search_in_dmhy(keyword)
+            search_result, url = self.search_in_dmhy(keyword, team)
             for anime in search_result[:10]:
                 reply_embed.add_field(
                     name='',
